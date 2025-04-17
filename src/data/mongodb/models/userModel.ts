@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, HydratedDocument } from 'mongoose';
 
 export interface IUser extends Document {
   firstName: string;
@@ -26,16 +26,12 @@ const userSchema = new Schema<IUser>(
     resetToken: { type: String, default: null },
     resetTokenExpiry: { type: Date, default: null }
   },
-  { 
-    timestamps: true,
-    collection: 'users'
-  }
+  { timestamps: true }
 );
 
-// Add this for debugging
-userSchema.pre('save', function() {
-  console.log('Saving user to collection:', this.collection.name);
-  console.log('Current database:', this.db.name);
+// Add this for debugging with proper typing
+userSchema.pre('save', function(this: HydratedDocument<IUser>) {
+  // Pre-save hook
 });
 
 const User = mongoose.model<IUser>('User', userSchema);
