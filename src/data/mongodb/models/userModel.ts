@@ -1,6 +1,7 @@
-import mongoose, { Schema, Document, HydratedDocument } from 'mongoose';
+import * as mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-export interface IUser extends Document {
+export interface IUser extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;
@@ -29,9 +30,7 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-// Add this for debugging with proper typing
-userSchema.pre('save', function(this: HydratedDocument<IUser>) {
-  // Pre-save hook
+userSchema.pre('save', function(this: any) {
 });
 
 const User = mongoose.model<IUser>('User', userSchema);
