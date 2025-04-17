@@ -5,12 +5,18 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    console.log('Attempting to connect to MongoDB...');
-    console.log('Connection string (partially masked):', 
-      process.env.MONGODB_URI?.replace(/:([^:@]+)@/, ':****@'));
+    const mongoUri = process.env.MONGODB_URI as string;
+    let dbName = 'visualization_db'; 
     
-    const conn = await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    const uriParts = mongoUri.split('?')[0].split('/');
+    if (uriParts.length > 3 && uriParts[3]) {
+      dbName = uriParts[3];
+    }
+    
+    const conn = await mongoose.connect(mongoUri, {
+      dbName: dbName 
+    });
+    
     return conn;
   } catch (error) {
     console.error('MongoDB connection error:', error);
