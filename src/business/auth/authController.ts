@@ -11,15 +11,12 @@ export class AuthController {
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log('Registration request received:', req.body);
       const result = await this.authService.register(req.body);
-      console.log('Registration successful:', result);
       res.status(201).json({
         status: 'success',
         ...result
       });
     } catch (error) {
-      console.error('Registration failed:', error);
       next(error);
     }
   };
