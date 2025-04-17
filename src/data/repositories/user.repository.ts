@@ -1,10 +1,11 @@
 import User from '../mongodb/models/userModel';
+import type { IUser } from '../mongodb/models/userModel';
 import { IUserRepository, User as UserType, UserCreateDto, UserUpdateDto } from './IUserRepository';
 
 export class UserRepository implements IUserRepository {
   async findAll(): Promise<UserType[]> {
     const users = await User.find();
-    return users.map(user => this.mapToUser(user));
+    return users.map((user: IUser) => this.mapToUser(user));
   }
 
   async findById(id: string): Promise<UserType | null> {
