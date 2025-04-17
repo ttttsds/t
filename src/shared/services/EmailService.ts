@@ -10,25 +10,14 @@ class EmailService implements IEmailService {
   private transporter: nodemailer.Transporter;
   
   constructor() {
-    // Log email configuration for debugging (masked password)
-    console.log('Setting up email service with:', {
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: process.env.EMAIL_SECURE === 'true',
-      auth: { 
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD ? 'not-provided' : 'not-provided' 
-      }
-    });
-    
-    // Configure transporter properly for Gmail
+
     this.transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      secure: false, // true for 465, false for other ports
+      secure: false, 
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD // This is your app password
+        pass: process.env.EMAIL_PASSWORD
       }
     });
   }
