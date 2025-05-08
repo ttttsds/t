@@ -17,7 +17,10 @@ import { CurriculumService } from '../business/services/curriculumService';
 
 import { AuthController } from '../business/auth/authController';
 import { UserController } from '../business/user/userController';
-import { authMiddleware } from '../shared/middlewares/authMiddleware';
+import { LessonController } from '../business/learning/lessonController';
+import { CurriculumController } from '../business/learning/curriculumController';
+import { ContentController } from '../business/learning/contentController';
+import { authMiddleware } from '../shared/middlewares/AuthMiddleware';
 
 // Create repository instances
 const userRepository = new UserRepository();
@@ -42,6 +45,9 @@ const curriculumService = new CurriculumService(pathRepository, sectionRepositor
 // Create controllers
 const authController = new AuthController(authService);
 const userController = new UserController(userService);
+const lessonController = new LessonController(lessonService, contentService);
+const curriculumController = new CurriculumController(curriculumService);
+const contentController = new ContentController(contentService);
 
 // Export as plain object instead of using Container
 export const DI = {
@@ -65,5 +71,8 @@ export const DI = {
   
   // Controllers
   authController,
-  userController
+  userController,
+  lessonController,
+  curriculumController,
+  contentController
 };
