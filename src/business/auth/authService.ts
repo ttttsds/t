@@ -69,7 +69,10 @@ export class AuthService implements IAuthService {
     };
   }
   
-  async verifyAccount(data: VerifyAccountDto): Promise<{ message: string }> {
+  /**
+   * Verify user account with the provided token
+   */
+  async verifyAccount(data: VerifyAccountDto): Promise<AuthResponse> {
     const { token } = data;
     
     // Find user with the token
@@ -86,8 +89,15 @@ export class AuthService implements IAuthService {
       verificationTokenExpiry: null
     });
     
+    // Generate JWT token, same as login
+    const authToken = this.tokenService.generateToken({ id: user.id });
+    
+    // Remove password from response
+    const { password: _, ...userWithoutPassword } = user;
+    
     return {
-      message: 'Account verified successfully'
+      token: authToken,
+      user: userWithoutPassword as any
     };
   }
   
@@ -155,6 +165,8 @@ export class AuthService implements IAuthService {
     };
   }
   
+
+
   async resetPassword(data: ResetPasswordDto): Promise<{ message: string }> {
     const { token, password } = data;
     
@@ -172,7 +184,7 @@ export class AuthService implements IAuthService {
     await this.userRepository.update(user.id, {
       password: hashedPassword,
       resetToken: null,
-      resetTokenExpiry: null
+      resetTokenExpiry: null 
     });
     
     return {

@@ -2,7 +2,7 @@
 import app from './app';
 import connectDB from '../data/mongodb/client';
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 const startServer = async () => {
   try {
@@ -19,24 +19,4 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('UNHANDLED REJECTION! Shutting down...');
-  console.error(err);
-  process.exit(1);
-});
-
-// Handle graceful shutdown
-process.on('SIGINT', async () => {
-  console.log('Disconnected from database');
-  process.exit(0);
-});
-
-process.on('SIGTERM', async () => {
-  console.log('Disconnected from database');
-  process.exit(0);
-});
-
-// Start the server
 startServer();

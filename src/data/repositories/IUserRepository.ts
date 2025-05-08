@@ -4,6 +4,7 @@ export interface IUserRepository {
   findByEmail(email: string): Promise<User | null>;
   findByVerificationToken(token: string): Promise<User | null>;
   findByResetToken(token: string): Promise<User | null>;
+  userExists(id: string): Promise<boolean>;
   create(data: UserCreateDto): Promise<User>;
   update(id: string, data: UserUpdateDto): Promise<User>;
   delete(id: string): Promise<User>;
@@ -20,8 +21,6 @@ export interface User {
   verificationTokenExpiry?: Date | null;
   resetToken?: string | null;
   resetTokenExpiry?: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface UserCreateDto {

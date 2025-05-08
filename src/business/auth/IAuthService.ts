@@ -10,7 +10,7 @@ import {
 
 export interface IAuthService {
   register(data: RegisterDto): Promise<{ message: string }>;
-  verifyAccount(data: VerifyAccountDto): Promise<{ message: string }>;
+  verifyAccount(data: VerifyAccountDto): Promise<AuthResponse>;
   resendVerification(data: ResendVerificationDto): Promise<{ message: string }>;
   login(data: LoginDto): Promise<AuthResponse>;
   forgotPassword(data: ForgotPasswordDto): Promise<{ message: string }>;

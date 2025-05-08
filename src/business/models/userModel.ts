@@ -9,8 +9,6 @@ export interface User {
   verificationTokenExpiry?: Date | null;
   resetToken?: string | null;
   resetTokenExpiry?: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface UserCreateDto {

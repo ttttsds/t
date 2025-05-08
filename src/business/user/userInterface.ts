@@ -15,6 +15,4 @@ export interface UpdateProfileDto {
     lastName: string;
     email: string;
     isVerified: boolean;
-    createdAt: Date;
-    updatedAt: Date;
   }

@@ -11,8 +11,6 @@ export interface IUser extends mongoose.Document {
   verificationTokenExpiry?: Date;
   resetToken?: string;
   resetTokenExpiry?: Date;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -27,10 +25,13 @@ const userSchema = new Schema<IUser>(
     resetToken: { type: String, default: null },
     resetTokenExpiry: { type: Date, default: null }
   },
-  { timestamps: true }
+  { timestamps: false, versionKey: false }
 );
 
+// Remove the pre-save hook that was causing typing issues
+// or use a type assertion to fix it
 userSchema.pre('save', function(this: any) {
+  // Pre-save hook
 });
 
 const User = mongoose.model<IUser>('User', userSchema);

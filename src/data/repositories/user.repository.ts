@@ -55,6 +55,15 @@ export class UserRepository implements IUserRepository {
     return this.mapToUser(user);
   }
 
+  async userExists(id: string): Promise<boolean> {
+    try {
+      const count = await User.countDocuments({ _id: id });
+      return count > 0;
+    } catch (error) {
+      return false;
+    }
+  }
+
   private mapToUser(doc: any): UserType {
     return {
       id: doc._id.toString(),
@@ -66,9 +75,7 @@ export class UserRepository implements IUserRepository {
       verificationToken: doc.verificationToken,
       verificationTokenExpiry: doc.verificationTokenExpiry,
       resetToken: doc.resetToken,
-      resetTokenExpiry: doc.resetTokenExpiry,
-      createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt
+      resetTokenExpiry: doc.resetTokenExpiry
     };
   }
 }

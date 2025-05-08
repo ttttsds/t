@@ -9,15 +9,15 @@ import APIsGateway from '../presentation/APIsGateway';
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3025',
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/', APIsGateway);
+// Routes with API versioning
+app.use('/api/v1', APIsGateway);
+
+// Backward compatibility for any existing clients
+app.use('/api', APIsGateway);
 
 // Error handling
 app.use(errorHandler);
